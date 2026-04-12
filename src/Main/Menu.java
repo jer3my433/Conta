@@ -1,25 +1,29 @@
 package Main;
 
 import desplazable.Desface;
+import java.awt.BorderLayout;
 
 public class Menu extends javax.swing.JFrame {
-
+    String usuario;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Menu.class.getName());
 
     Desface desplace;
 
-    public Menu() {
+    public Menu(String user) {
+        this.usuario = user;
         initComponents();
         this.setSize(590, 610);
         this.getLayeredPane().add(MenuDesplegable, javax.swing.JLayeredPane.PALETTE_LAYER);
         MenuDesplegable.setBounds(-150, 71, 148, 642);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+        MenuInicio m1 = new MenuInicio();
+        Ventana.add(m1, BorderLayout.CENTER);
         desplace = new Desface();
         rsscalelabel.RSScaleLabel.setScaleLabel(jLabel2, "src/Imagenes/menu.png");
         rsscalelabel.RSScaleLabel.setScaleLabel(jLabel5, "src/Imagenes/usu.png");
         rsscalelabel.RSScaleLabel.setScaleLabel(jLabel6, "src/Imagenes/engranaje.png");
-        
+        rsscalelabel.RSScaleLabel.setScaleLabel(jLabel4, "src/Imagenes/inicio.png");
     }
 
     @SuppressWarnings("unchecked")
@@ -45,6 +49,7 @@ public class Menu extends javax.swing.JFrame {
         getContentPane().setLayout(null);
 
         MenuDesplegable.setBackground(new java.awt.Color(255, 255, 255));
+        MenuDesplegable.setMinimumSize(new java.awt.Dimension(148, 642));
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -71,7 +76,7 @@ public class Menu extends javax.swing.JFrame {
         jButton3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
 
         jButton1.setFont(new java.awt.Font("Tw Cen MT", 1, 14)); // NOI18N
-        jButton1.setText("Formalización");
+        jButton1.setText("Jornalización");
         jButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -101,12 +106,6 @@ public class Menu extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(MenuDesplegableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(MenuDesplegableLayout.createSequentialGroup()
-                        .addGroup(MenuDesplegableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton3)
-                            .addComponent(jButton2)
-                            .addComponent(jButton4))
-                        .addGap(0, 22, Short.MAX_VALUE))
-                    .addGroup(MenuDesplegableLayout.createSequentialGroup()
                         .addGroup(MenuDesplegableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -114,7 +113,13 @@ public class Menu extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(MenuDesplegableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(MenuDesplegableLayout.createSequentialGroup()
+                        .addGroup(MenuDesplegableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton3)
+                            .addComponent(jButton2)
+                            .addComponent(jButton4))
+                        .addGap(0, 14, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         MenuDesplegableLayout.setVerticalGroup(
@@ -124,7 +129,7 @@ public class Menu extends javax.swing.JFrame {
                 .addGroup(MenuDesplegableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(30, 30, 30)
                 .addGroup(MenuDesplegableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -136,11 +141,11 @@ public class Menu extends javax.swing.JFrame {
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton4)
-                .addContainerGap(442, Short.MAX_VALUE))
+                .addContainerGap(424, Short.MAX_VALUE))
         );
 
         getContentPane().add(MenuDesplegable);
-        MenuDesplegable.setBounds(-110, 40, 158, 642);
+        MenuDesplegable.setBounds(0, 40, 150, 642);
 
         Ventana.setBackground(new java.awt.Color(255, 255, 255));
         Ventana.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -160,9 +165,10 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setForeground(new java.awt.Color(0, 151, 216));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/inicio.png"))); // NOI18N
         jLabel4.setAlignmentY(2.0F);
-        jLabel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -179,19 +185,20 @@ public class Menu extends javax.swing.JFrame {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(484, Short.MAX_VALUE))
+                .addContainerGap(494, Short.MAX_VALUE))
         );
         BotonLayout.setVerticalGroup(
             BotonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(BotonLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(BotonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                .addGroup(BotonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 1, Short.MAX_VALUE))
         );
 
         getContentPane().add(Boton);
-        Boton.setBounds(0, 0, 570, 40);
+        Boton.setBounds(0, 0, 580, 40);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -205,22 +212,25 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Form f1 = new Form();
+        Form f1 = new Form(usuario);
         Ventana.removeAll();
-        Ventana.add(f1, java.awt.BorderLayout.CENTER);
+        Ventana.add(f1, BorderLayout.CENTER);
         Ventana.revalidate();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-        // TODO add your handling code here:
+        MenuInicio m1 = new MenuInicio();
+        Ventana.removeAll();
+        Ventana.add(m1, BorderLayout.CENTER);
+        Ventana.revalidate();
     }//GEN-LAST:event_jLabel4MouseClicked
 
     
     public static void main(String args[]) {
-
+        
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new Menu().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new Menu("Admin").setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

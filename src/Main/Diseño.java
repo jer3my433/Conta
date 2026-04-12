@@ -172,12 +172,12 @@ public class Diseño extends javax.swing.JFrame {
 
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-
         if (Usuario.getText().isEmpty() || Usuario.getText().equals("Ingrese su usuario") || Clave.getText().isEmpty() || Clave.getText().equals("**********")) {
-            JOptionPane.showMessageDialog(this, "Llene todos los campos", "Alerta", JOptionPane.ERROR_MESSAGE);
-        } else {
+            JOptionPane.showMessageDialog(this, "Ingrese sus datos", "Alerta", JOptionPane.ERROR_MESSAGE);
+           } else {
+            String Nombre = Usuario.getText();
             this.dispose();
-            Menu m1 = new Menu();
+            Menu m1 = new Menu(Nombre);
             m1.setVisible(true);
         }
     }//GEN-LAST:event_jButton1MouseClicked
