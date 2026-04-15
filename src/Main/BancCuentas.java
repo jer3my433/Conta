@@ -1,5 +1,6 @@
 package Main;
 
+import BD.Crudd;
 import java.awt.Font;
 import javax.swing.table.TableColumn;
 
@@ -14,19 +15,23 @@ public class BancCuentas extends javax.swing.JPanel {
         BordesVentanas(jScrollPane1, 15);
         BordesVentanas(jPanel1, 15);
         BordesVentanas(jPanel2, 15);
-        cargarTablaCuentas();
         jLabel1.setSize(35, 35);
         rsscalelabel.RSScaleLabel.setScaleLabel(jLabel1, "src/Imagenes/usu.png");
+        cargarTablaCuentas();
     }
 
     private void cargarTablaCuentas() {
-        BD.Crudd objetoCrudd = new BD.Crudd();
-        jTable1.setModel(objetoCrudd.LeerCuentas2());
-        TableColumn columnaCuenta = jTable1.getColumnModel().getColumn(1);
-        columnaCuenta.setPreferredWidth(300);
-        jTable1.getTableHeader().setBackground(new java.awt.Color(40, 40, 40));
-        jTable1.getTableHeader().setForeground(java.awt.Color.WHITE);
-        jTable1.getTableHeader().setFont(new Font("TW Cent MT", Font.BOLD, 12));
+        Crudd objetoCrudd = new Crudd();
+        TablaCuentas.setModel(objetoCrudd.LeerBancCuentas());
+        TableColumn columnaNo = TablaCuentas.getColumnModel().getColumn(0);
+        columnaNo.setPreferredWidth(35);
+        TableColumn columnaCuenta = TablaCuentas.getColumnModel().getColumn(1);
+        columnaCuenta.setPreferredWidth(280);
+        TableColumn columnaGan = TablaCuentas.getColumnModel().getColumn(5);
+        columnaGan.setPreferredWidth(100);
+        TablaCuentas.getTableHeader().setBackground(new java.awt.Color(40, 40, 40));
+        TablaCuentas.getTableHeader().setForeground(java.awt.Color.WHITE);
+        TablaCuentas.getTableHeader().setFont(new Font("TW Cent MT", Font.BOLD, 12));
     }
 
     private void BordesVentanas(javax.swing.JComponent componente, int arco) {
@@ -43,7 +48,7 @@ public class BancCuentas extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        TablaCuentas = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -87,9 +92,9 @@ public class BancCuentas extends javax.swing.JPanel {
 
         jPanel2.setBackground(new java.awt.Color(206, 221, 255));
 
-        jTable1.setFont(new java.awt.Font("Tw Cen MT", 0, 12)); // NOI18N
-        jTable1.setForeground(new java.awt.Color(0, 0, 0));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        TablaCuentas.setFont(new java.awt.Font("Tw Cen MT", 0, 12)); // NOI18N
+        TablaCuentas.setForeground(new java.awt.Color(0, 0, 0));
+        TablaCuentas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
@@ -100,15 +105,13 @@ public class BancCuentas extends javax.swing.JPanel {
                 "No.", "Cuenta", "Activo", "Pasivo", "Perdida", "Ganancia", "Debe", "Haber"
             }
         ));
-        jTable1.setGridColor(new java.awt.Color(0, 0, 0));
-        jTable1.setShowGrid(true);
-        jTable1.setShowHorizontalLines(true);
-        jTable1.setShowVerticalLines(true);
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(35);
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(370);
+        TablaCuentas.setGridColor(new java.awt.Color(0, 0, 0));
+        TablaCuentas.setShowGrid(true);
+        TablaCuentas.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(TablaCuentas);
+        if (TablaCuentas.getColumnModel().getColumnCount() > 0) {
+            TablaCuentas.getColumnModel().getColumn(0).setPreferredWidth(35);
+            TablaCuentas.getColumnModel().getColumn(1).setPreferredWidth(370);
         }
 
         jLabel3.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
@@ -166,7 +169,7 @@ public class BancCuentas extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Form f1 = new Form(usuario);
+        Jornalización f1 = new Jornalización(usuario);
         f1.setSize(this.getWidth(), this.getHeight());
         f1.setLocation(0, 0);
         this.removeAll();
@@ -177,6 +180,7 @@ public class BancCuentas extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable TablaCuentas;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -184,6 +188,5 @@ public class BancCuentas extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

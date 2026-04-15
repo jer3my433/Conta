@@ -2,8 +2,10 @@ package Main;
 
 import desplazable.Desface;
 import java.awt.BorderLayout;
+import javax.swing.JLayeredPane;
 
 public class Menu extends javax.swing.JFrame {
+
     String usuario;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Menu.class.getName());
 
@@ -12,11 +14,13 @@ public class Menu extends javax.swing.JFrame {
     public Menu(String user) {
         this.usuario = user;
         initComponents();
+        this.setTitle("Programa contable");
         this.setSize(590, 610);
-        this.getLayeredPane().add(MenuDesplegable, javax.swing.JLayeredPane.PALETTE_LAYER);
-        MenuDesplegable.setBounds(-150, 71, 148, 642);
-        this.setResizable(false);
+        this.getLayeredPane().add(MenuDesplegable, JLayeredPane.PALETTE_LAYER);
+        MenuDesplegable.setBounds(-150, 71, 148, 668);
+        this.setExtendedState(MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
+//        this.setResizable(false);
         MenuInicio m1 = new MenuInicio();
         Ventana.add(m1, BorderLayout.CENTER);
         desplace = new Desface();
@@ -185,7 +189,7 @@ public class Menu extends javax.swing.JFrame {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(494, Short.MAX_VALUE))
+                .addContainerGap(490, Short.MAX_VALUE))
         );
         BotonLayout.setVerticalGroup(
             BotonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -198,7 +202,7 @@ public class Menu extends javax.swing.JFrame {
         );
 
         getContentPane().add(Boton);
-        Boton.setBounds(0, 0, 580, 40);
+        Boton.setBounds(0, 0, 576, 40);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -212,9 +216,10 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Form f1 = new Form(usuario);
+        Jornalización f1 = new Jornalización(usuario);
         Ventana.removeAll();
         Ventana.add(f1, BorderLayout.CENTER);
+        desplace.desplazarIzquierda(MenuDesplegable, MenuDesplegable.getX(), -150, 10, 15);
         Ventana.revalidate();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -222,12 +227,12 @@ public class Menu extends javax.swing.JFrame {
         MenuInicio m1 = new MenuInicio();
         Ventana.removeAll();
         Ventana.add(m1, BorderLayout.CENTER);
+        desplace.desplazarIzquierda(MenuDesplegable, MenuDesplegable.getX(), -150, 10, 15);
         Ventana.revalidate();
     }//GEN-LAST:event_jLabel4MouseClicked
 
-    
     public static void main(String args[]) {
-        
+
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new Menu("Admin").setVisible(true));

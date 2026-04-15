@@ -3,29 +3,29 @@ package Main;
 import BD.Crudd;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.text.JTextComponent;
 
-public class Form extends javax.swing.JPanel {
+public class Jornalización extends javax.swing.JPanel {
 
     String us;
 
-    public Form(String user) {
+    public Jornalización(String user) {
         initComponents();
         this.us = user;
         TablaUsuario.getTableHeader().setFont(new Font("TW Cent MT", Font.BOLD, 12));
-        BordesVentanas(jScrollPane1, 15);
-        BordesVentanas(jPanel2, 10);
-        BordesVentanas(jPanel3, 10);
-        BordesVentanas(jPanel4, 10);
-        BordesVentanas(Agregar, 15);
-        BordesVentanas(Modificar, 15);
-        BordesVentanas(Guardar, 15);
-        BordesVentanas(Eliminar, 15);
-        BordesVentanas(Resultado, 15);
-        BordesVentanas(ResultadoDebe, 15);
-        BordesVentanas(ResultadoHaber, 15);
+        BordesVentanas(15, jScrollPane1, jPanel2, jPanel3, jPanel4, Agregar, Modificar, Guardar, Eliminar, Resultado, ResultadoDebe, ResultadoHaber);
+        EventQueue.invokeLater(() -> {
+            TextoCodigo.requestFocusInWindow();
+        });
         mostrar();
+        cargarCuentasEnCombo();
+        configurarBuscadorCombo();
     }
 
     @SuppressWarnings("unchecked")
@@ -41,15 +41,15 @@ public class Form extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         TextoCodigo = new javax.swing.JTextField();
-        TextoCorrelativo = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        TextoCuenta = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        TextoDeudor = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        TextoAcreedor = new javax.swing.JTextField();
-        TextoFecha = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
+        Cuentas = new javax.swing.JComboBox<>();
+        TextoCorrelativo = new javax.swing.JFormattedTextField();
+        TextoFecha = new javax.swing.JFormattedTextField();
+        TextoDeudor = new javax.swing.JFormattedTextField();
+        TextoAcreedor = new javax.swing.JFormattedTextField();
         jPanel3 = new javax.swing.JPanel();
         Agregar = new javax.swing.JButton();
         Modificar = new javax.swing.JButton();
@@ -125,27 +125,46 @@ public class Form extends javax.swing.JPanel {
 
         TextoCodigo.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
 
-        TextoCorrelativo.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
-
         jLabel4.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jLabel4.setText("Cuenta");
-
-        TextoCuenta.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jLabel5.setText("Deudor");
 
-        TextoDeudor.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
-
         jLabel6.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jLabel6.setText("Acreedor");
 
-        TextoAcreedor.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
-
-        TextoFecha.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
-
         jLabel7.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jLabel7.setText("Datos");
+
+        Cuentas.setEditable(true);
+        Cuentas.setFont(new java.awt.Font("Tw Cen MT", 0, 12)); // NOI18N
+        Cuentas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione la cuenta" }));
+        Cuentas.setToolTipText("");
+
+        try {
+            TextoCorrelativo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("P No.****")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            TextoFecha.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("**/**/****")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            TextoDeudor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("Q.**********")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            TextoAcreedor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("Q.**********")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -154,60 +173,62 @@ public class Form extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel7))
-                .addGap(24, 24, 24)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(TextoCorrelativo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-                    .addComponent(TextoFecha, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(TextoCodigo, javax.swing.GroupLayout.Alignment.LEADING))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addGap(24, 24, 24))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(40, 40, 40)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(TextoCorrelativo, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                    .addComponent(TextoFecha)
+                    .addComponent(TextoCodigo))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(TextoDeudor, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-                        .addComponent(TextoAcreedor))
-                    .addComponent(TextoCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(Cuentas, 0, 163, Short.MAX_VALUE)
+                    .addComponent(TextoDeudor)
+                    .addComponent(TextoAcreedor))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(TextoCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(TextoCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2)
-                        .addComponent(TextoCorrelativo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(TextoDeudor)))
-                .addGap(18, 18, 18)
+                .addGap(9, 9, 9)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel6)
-                        .addComponent(TextoAcreedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel3)
-                        .addComponent(TextoFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(9, 9, 9))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Cuentas, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(TextoDeudor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(TextoAcreedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(TextoCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(TextoCorrelativo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(TextoFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
 
         jPanel3.setBackground(new java.awt.Color(206, 221, 255));
@@ -249,7 +270,7 @@ public class Form extends javax.swing.JPanel {
         });
 
         BorrarTodo.setFont(new java.awt.Font("Tw Cen MT", 1, 14)); // NOI18N
-        BorrarTodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Eliminar todos" }));
+        BorrarTodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Eliminar todo" }));
         BorrarTodo.setEnabled(false);
         BorrarTodo.setOpaque(true);
         BorrarTodo.addActionListener(new java.awt.event.ActionListener() {
@@ -349,7 +370,7 @@ public class Form extends javax.swing.JPanel {
                 .addComponent(jLabel10)
                 .addGap(63, 63, 63)
                 .addComponent(ResultadoDebe, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addComponent(ResultadoHaber, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -378,21 +399,22 @@ public class Form extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(BancCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 126, Short.MAX_VALUE)
                         .addComponent(Resultado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(3, 3, 3))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(9, 9, 9)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -409,21 +431,31 @@ public class Form extends javax.swing.JPanel {
     private void AgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarActionPerformed
         try {
             Crudd op = new Crudd();
-            int cod = Integer.parseInt(TextoCodigo.getText());
-            String corre = TextoCorrelativo.getText();
-            String fecha = TextoFecha.getText();
-            String cuenta = TextoCuenta.getText();
-            int deudor = Integer.parseInt(TextoDeudor.getText());
-            int acreedor = Integer.parseInt(TextoAcreedor.getText());
+            int cod = Integer.parseInt(TextoCodigo.getText().trim());
+            String corre = TextoCorrelativo.getText().trim();
+            String fecha = TextoFecha.getText().trim();
+            String cuenta = Cuentas.getSelectedItem().toString();
+            String textoCombo = (Cuentas.getSelectedItem() == null) ? "" : Cuentas.getSelectedItem().toString().trim();
+            if (Cuentas.getSelectedIndex() == 0 || textoCombo.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Indique la cuenta");
+                Cuentas.requestFocus();
+                return;
+            }
+            configurarBuscadorCombo();
+            String dTxt = TextoDeudor.getText().replaceAll("[^0-9]", "");
+            String aTxt = TextoAcreedor.getText().replaceAll("[^0-9]", "");
+            int deudor = dTxt.isEmpty() ? 0 : Integer.parseInt(dTxt);
+            int acreedor = aTxt.isEmpty() ? 0 : Integer.parseInt(aTxt);
 
-            op.InsertarDatos(cod, corre, fecha, cuenta, deudor, acreedor);
+            if (op.existeRegistro(cod)) {
+                op.ActualizarDatos(cod, corre, fecha, cuenta, deudor, acreedor);
+            } else {
+                op.InsertarDatos(cod, corre, fecha, cuenta, deudor, acreedor);
+            }
             mostrar();
             nuevo();
-
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Llene todos los campos");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error" + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Llene los datos");
         }
     }//GEN-LAST:event_AgregarActionPerformed
 
@@ -432,7 +464,7 @@ public class Form extends javax.swing.JPanel {
         p2.setSize(this.getWidth(), this.getHeight());
         p2.setLocation(0, 0);
         this.removeAll();
-        this.add(p2, java.awt.BorderLayout.CENTER);
+        this.add(p2, BorderLayout.CENTER);
         this.revalidate();
         this.repaint();
     }//GEN-LAST:event_BancCuentasActionPerformed
@@ -444,16 +476,15 @@ public class Form extends javax.swing.JPanel {
         } else {
             try {
                 Crudd op = new Crudd();
-
                 int cod = Integer.parseInt(TextoCodigo.getText());
-                String corre = TextoCorrelativo.getText();
-                String fecha = TextoFecha.getText();
-                String cuenta = TextoCuenta.getText();
-                int deudor = Integer.parseInt(TextoDeudor.getText());
-                int acreedor = Integer.parseInt(TextoAcreedor.getText());
-
+                String corre = TextoCorrelativo.getText().trim();
+                String fecha = TextoFecha.getText().trim();
+                String cuenta = Cuentas.getSelectedItem().toString();
+                String Deudor = TextoDeudor.getText().replaceAll("[^0-9]", "");
+                String Acreedor = TextoAcreedor.getText().replaceAll("[^0-9]", "");
+                int deudor = Deudor.isEmpty() ? 0 : Integer.parseInt(Deudor);
+                int acreedor = Acreedor.isEmpty() ? 0 : Integer.parseInt(Acreedor);
                 op.ActualizarDatos(cod, corre, fecha, cuenta, deudor, acreedor);
-
                 mostrar();
                 nuevo();
             } catch (Exception e) {
@@ -466,9 +497,9 @@ public class Form extends javax.swing.JPanel {
         int fila = TablaUsuario.getSelectedRow();
         if (fila != -1) {
             TextoCodigo.setText(TablaUsuario.getValueAt(fila, 0).toString());
-            TextoCorrelativo.setText(TablaUsuario.getValueAt(fila, 1).toString());
-            TextoFecha.setText(TablaUsuario.getValueAt(fila, 2).toString());
-            TextoCuenta.setText(TablaUsuario.getValueAt(fila, 3).toString());
+            TextoCorrelativo.setValue(TablaUsuario.getValueAt(fila, 1).toString());
+            TextoFecha.setValue(TablaUsuario.getValueAt(fila, 2).toString());
+            Cuentas.setSelectedItem(TablaUsuario.getValueAt(fila, 3).toString());
             TextoDeudor.setText(TablaUsuario.getValueAt(fila, 4).toString());
             TextoAcreedor.setText(TablaUsuario.getValueAt(fila, 5).toString());
             TextoCodigo.setEditable(false);
@@ -480,11 +511,9 @@ public class Form extends javax.swing.JPanel {
         if (filas >= 2) {
             int respuesta = JOptionPane.showConfirmDialog(this, "¿Seguro de que deseas eliminar TODOS los registros?", "Eliminación de registro", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (respuesta == JOptionPane.YES_OPTION) {
-                Crudd objetoCrud = new Crudd();
-                objetoCrud.EliminarTodo();
-                TablaUsuario.setModel(objetoCrud.LeerDatos());
-                ResultadoDebe.setText("0");
-                ResultadoHaber.setText("0");
+                Crudd objeto = new Crudd();
+                objeto.EliminarTodo();
+                mostrar();
                 nuevo();
             }
         } else if (filas == 0) {
@@ -497,8 +526,8 @@ public class Form extends javax.swing.JPanel {
             int respuesta = JOptionPane.showConfirmDialog(this, "¿Seguro de que deseas eliminar este registro?", "Confirmar Eliminacion", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (respuesta == JOptionPane.YES_OPTION) {
                 int codigo = Integer.parseInt(TablaUsuario.getValueAt(TablaUsuario.getSelectedRow(), 0).toString());
-                Crudd objetoCrudd = new Crudd();
-                objetoCrudd.EliminarDatos(codigo);
+                Crudd objeto = new Crudd();
+                objeto.EliminarDatos(codigo);
                 mostrar();
                 nuevo();
             }
@@ -509,34 +538,78 @@ public class Form extends javax.swing.JPanel {
     }//GEN-LAST:event_EliminarActionPerformed
     }
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
-        
-        if (ResultadoDebe != ResultadoHaber) {
-            JOptionPane.showMessageDialog(this, "Guardado con éxito");
+        int[] totales = calcularTotal();
+        int Debe = totales[0];
+        int Haber = totales[1];
+        if (Debe != Haber) {
+            JOptionPane.showMessageDialog(this, "Los resultados no cuadran", "Alerta", JOptionPane.ERROR_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(this, "Los resultados no cuadran", "Alerta", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Guardado con éxito");
         }
     }//GEN-LAST:event_GuardarActionPerformed
 
     void mostrar() {
-        Crudd objetoCrud = new Crudd();
-        TablaUsuario.setModel(objetoCrud.LeerDatos());
+        Crudd objeto = new Crudd();
+        TablaUsuario.setModel(objeto.LeerDatos());
         calcularTotal();
     }
 
     void nuevo() {
         TextoCodigo.setText("");
-        TextoCorrelativo.setText("");
-        TextoFecha.setText("");
-        TextoCuenta.setText("");
-        TextoDeudor.setText("");
-        TextoAcreedor.setText("");
+        TextoCorrelativo.setValue("P No.");
+        TextoFecha.setValue("  /  /    ");
+        ((JTextComponent) Cuentas.getEditor().getEditorComponent()).setText("");
+        cargarCuentasEnCombo();
+        Cuentas.setSelectedIndex(0);
+        TextoDeudor.setValue("Q.");
+        TextoAcreedor.setValue("Q.");
         TextoCodigo.requestFocus();
         TextoCodigo.setEditable(true);
         TablaUsuario.clearSelection();
     }
 
-    private void BordesVentanas(javax.swing.JComponent componente, int arco) {
-        componente.putClientProperty("FlatLaf.style", "arc: " + arco);
+    private void BordesVentanas(int radio, javax.swing.JComponent... componentes) {
+        for (javax.swing.JComponent c : componentes) {
+            c.putClientProperty("FlatLaf.style", "arc: " + radio);
+        }
+    }
+
+    private void cargarCuentasEnCombo() {
+        Crudd objeto = new Crudd();
+        DefaultTableModel modelo = objeto.LeerBancCuentas();
+        for (int i = 0; i < modelo.getRowCount(); i++) {
+            String nombreCuenta = modelo.getValueAt(i, 1).toString();
+            Cuentas.addItem(nombreCuenta);
+        }
+    }
+
+    private void configurarBuscadorCombo() {
+        JTextComponent editor = (JTextComponent) Cuentas.getEditor().getEditorComponent();
+        editor.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                String charEscrito = editor.getText();
+
+                if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_DOWN) {
+                    return;
+                }
+                Crudd objeto = new Crudd();
+                DefaultTableModel modelo = objeto.LeerBancCuentas();
+                Cuentas.removeAllItems();
+                boolean Coincidencias = false;
+                for (int i = 0; i < modelo.getRowCount(); i++) {
+                    String nombre = modelo.getValueAt(i, 1).toString();
+                    if (nombre.toLowerCase().contains(charEscrito.toLowerCase())) {
+                        Cuentas.addItem(nombre);
+                        Coincidencias = true;
+                    }
+                }
+                editor.setText(charEscrito);
+                if (Coincidencias) {
+                    Cuentas.setPopupVisible(true);
+                }
+            }
+        });
     }
 
     private int[] calcularTotal() {
@@ -573,6 +646,7 @@ public class Form extends javax.swing.JPanel {
     private javax.swing.JButton Agregar;
     private javax.swing.JButton BancCuentas;
     private javax.swing.JComboBox<String> BorrarTodo;
+    private javax.swing.JComboBox<String> Cuentas;
     private javax.swing.JButton Eliminar;
     private javax.swing.JButton Guardar;
     private javax.swing.JButton Modificar;
@@ -580,12 +654,11 @@ public class Form extends javax.swing.JPanel {
     private javax.swing.JLabel ResultadoDebe;
     private javax.swing.JLabel ResultadoHaber;
     private javax.swing.JTable TablaUsuario;
-    private javax.swing.JTextField TextoAcreedor;
+    private javax.swing.JFormattedTextField TextoAcreedor;
     private javax.swing.JTextField TextoCodigo;
-    private javax.swing.JTextField TextoCorrelativo;
-    private javax.swing.JTextField TextoCuenta;
-    private javax.swing.JTextField TextoDeudor;
-    private javax.swing.JTextField TextoFecha;
+    private javax.swing.JFormattedTextField TextoCorrelativo;
+    private javax.swing.JFormattedTextField TextoDeudor;
+    private javax.swing.JFormattedTextField TextoFecha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
