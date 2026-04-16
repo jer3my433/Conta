@@ -434,13 +434,17 @@ public class Jornalización extends javax.swing.JPanel {
             int cod = Integer.parseInt(TextoCodigo.getText().trim());
             String corre = TextoCorrelativo.getText().trim();
             String fecha = TextoFecha.getText().trim();
-            String cuenta = Cuentas.getSelectedItem().toString();
-            String textoCombo = (Cuentas.getSelectedItem() == null) ? "" : Cuentas.getSelectedItem().toString().trim();
-            if (Cuentas.getSelectedIndex() == 0 || textoCombo.isEmpty()) {
+            String cuentaSeleccionada = "";
+            if (Cuentas.getEditor().getItem() != null) {
+                cuentaSeleccionada = Cuentas.getEditor().getItem().toString().trim();
+            }
+
+            if (cuentaSeleccionada.isEmpty() || cuentaSeleccionada.equals("Seleccione la cuenta")) {
                 JOptionPane.showMessageDialog(this, "Indique la cuenta");
                 Cuentas.requestFocus();
                 return;
             }
+            String cuenta = cuentaSeleccionada;
             configurarBuscadorCombo();
             String dTxt = TextoDeudor.getText().replaceAll("[^0-9]", "");
             String aTxt = TextoAcreedor.getText().replaceAll("[^0-9]", "");
@@ -513,6 +517,7 @@ public class Jornalización extends javax.swing.JPanel {
             if (respuesta == JOptionPane.YES_OPTION) {
                 Crudd objeto = new Crudd();
                 objeto.EliminarTodo();
+                calcularTotal();
                 mostrar();
                 nuevo();
             }
@@ -558,7 +563,8 @@ public class Jornalización extends javax.swing.JPanel {
         TextoCodigo.setText("");
         TextoCorrelativo.setValue("P No.");
         TextoFecha.setValue("  /  /    ");
-        ((JTextComponent) Cuentas.getEditor().getEditorComponent()).setText("");
+        Cuentas.removeAllItems();
+        Cuentas.addItem("Seleccione la cuenta");
         cargarCuentasEnCombo();
         Cuentas.setSelectedIndex(0);
         TextoDeudor.setValue("Q.");
@@ -618,6 +624,9 @@ public class Jornalización extends javax.swing.JPanel {
         if (TablaUsuario.getRowCount() >= 2) {
             BorrarTodo.setEnabled(true);
             Guardar.setEnabled(true);
+        } else {
+            BorrarTodo.setEnabled(false);
+            Guardar.setEnabled(false);
         }
 
         for (int i = 0; i < TablaUsuario.getRowCount(); i++) {
@@ -628,16 +637,18 @@ public class Jornalización extends javax.swing.JPanel {
         ResultadoDebe.setText(String.valueOf(totalDeudor));
         ResultadoHaber.setText(String.valueOf(totalAcreedor));
 
-        if (TablaUsuario.getRowCount() >= 2) {
-            if (totalDeudor != totalAcreedor) {
-                Color rojo = new Color(255, 150, 150);
-                ResultadoDebe.setBackground(rojo);
-                ResultadoHaber.setBackground(rojo);
-            } else if (totalDeudor == totalAcreedor) {
-                ResultadoDebe.setBackground(Color.WHITE);
-                ResultadoHaber.setBackground(Color.WHITE);
-            }
+        if (TablaUsuario.getRowCount() < 2) {
+            ResultadoDebe.setBackground(Color.WHITE);
+            ResultadoHaber.setBackground(Color.WHITE);
+        } else if (totalDeudor != totalAcreedor) {
+            Color rojo = new Color(255, 150, 150);
+            ResultadoDebe.setBackground(rojo);
+            ResultadoHaber.setBackground(rojo);
+        } else {
+            ResultadoDebe.setBackground(Color.WHITE);
+            ResultadoHaber.setBackground(Color.WHITE);
         }
+
         return new int[]{totalDeudor, totalAcreedor};
     }
 
