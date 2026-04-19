@@ -641,9 +641,8 @@ public class Jornalización extends javax.swing.JPanel {
             ResultadoDebe.setBackground(Color.WHITE);
             ResultadoHaber.setBackground(Color.WHITE);
         } else if (totalDeudor != totalAcreedor) {
-            Color rojo = new Color(255, 150, 150);
-            ResultadoDebe.setBackground(rojo);
-            ResultadoHaber.setBackground(rojo);
+            ResultadoDebe.setBackground(new Color(255, 150, 150));
+            ResultadoHaber.setBackground(new Color(255, 150, 150));
         } else {
             ResultadoDebe.setBackground(Color.WHITE);
             ResultadoHaber.setBackground(Color.WHITE);

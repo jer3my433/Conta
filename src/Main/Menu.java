@@ -216,11 +216,16 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Jornalización f1 = new Jornalización(usuario);
-        Ventana.removeAll();
-        Ventana.add(f1, BorderLayout.CENTER);
-        desplace.desplazarIzquierda(MenuDesplegable, MenuDesplegable.getX(), -150, 10, 15);
-        Ventana.revalidate();
+          PeriodoContable pc1 = new PeriodoContable();
+          Ventana.removeAll();
+          Ventana.add(pc1, BorderLayout.CENTER);
+          desplace.desplazarIzquierda(MenuDesplegable, MenuDesplegable.getX(), -150, 10, 15);
+          Ventana.revalidate();
+//        Jornalización f1 = new Jornalización(usuario);
+//        Ventana.removeAll();
+//        Ventana.add(f1, BorderLayout.CENTER);
+//        desplace.desplazarIzquierda(MenuDesplegable, MenuDesplegable.getX(), -150, 10, 15);
+//        Ventana.revalidate();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
